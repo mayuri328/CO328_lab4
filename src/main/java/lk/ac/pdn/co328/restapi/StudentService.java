@@ -8,17 +8,25 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import lk.ac.pdn.co328.studentSystem.arraylistimplementation.ArraylistStudentRegister;
+import lk.ac.pdn.co328.studentSystem.dbimplementation.DerbyStudentRegister;
+
+import java.sql.SQLException;
+
 
 @Path("rest")
 public class StudentService
-{
-    private static StudentRegister register = new ArraylistStudentRegister();
+{   private static DerbyStudentRegister register;
+
+    StudentService()throws SQLException{
+        register = new DerbyStudentRegister();
+    }
+
 
     @GET
     @Path("student/{id}")
     // Uncommenting this will let the reciver know that you are sending a json
     @Produces( MediaType.APPLICATION_JSON + "," + MediaType.APPLICATION_XML )
-    public Response viewStudent(@PathParam("id") int id) {
+    public Response viewStudent(@PathParam("id") int id)throws Exception{
         Student st = register.findStudent(id);
         if(st == null){
             return Response.status(HttpResponseCodes.SC_NOT_FOUND).build();
@@ -29,7 +37,7 @@ public class StudentService
     @PUT
     @Path("student/{id}")
     @Consumes("application/xml")
-    public Response modifyStudent(@PathParam("id") int id, Student input)
+    public Response modifyStudent(@PathParam("id") int id, Student input)throws Exception
     {
         if(input == null) {
             try {
@@ -54,7 +62,7 @@ public class StudentService
     @DELETE
     @Path("student/{id}")
 
-    public Response deleteStudent(@PathParam("id") int id) {
+    public Response deleteStudent(@PathParam("id") int id)throws Exception {
         if ((register.findStudent(id) != (null))) {
             try {
                 register.removeStudent(id);

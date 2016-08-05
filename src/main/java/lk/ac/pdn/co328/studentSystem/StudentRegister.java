@@ -5,6 +5,7 @@
  */
 package lk.ac.pdn.co328.studentSystem;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -14,15 +15,15 @@ import java.util.ArrayList;
 public abstract class StudentRegister 
 {
     // FIXME: Maybe you can remove some unused methods here and add a modify student section ??
-    
+
     // Adds a new student to the system
     public abstract void addStudent(Student st) throws Exception ;
 
     // Remove a student from the system
-    public abstract void removeStudent(int regNo);
+    public abstract void removeStudent(int regNo) throws Exception;
 
     //Finds the student with the given registration number
-    public abstract Student findStudent(int regNo);
+    public abstract Student findStudent(int regNo) throws Exception;
 
     // Cleans all the data from the student register
     public abstract void reset();
